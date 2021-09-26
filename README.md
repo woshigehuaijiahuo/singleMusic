@@ -10,4 +10,5 @@
    或者指定特定的音乐源  
     `python3 main.py :kugou 你需要播放的音乐`  
    目前只支持 netease kugou 两个音乐源， 默认为 netease 
-    
+### 演示
+  [bilibili视频演示](https://www.bilibili.com/video/BV1ML411t7kt?spm_id_from=333.999.0.0 "视频演示")
