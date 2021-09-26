@@ -10,11 +10,10 @@
 # from io import BytesIO
 
 import time
+from io import BytesIO
 
 import pygame
 from pydub import AudioSegment
-from pydub.utils import mediainfo
-from io import BytesIO
 
 from exception.music_exception import InputParameterError
 from view.lyric_split import LyricSplit
