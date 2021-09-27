@@ -3,7 +3,7 @@
 """
 import re
 
-from exception.music_exception import InputParameterError
+from src.exception.music_exception import InputParameterError
 
 
 def lyric_filter(lyric=None) -> bool:

@@ -1,5 +1,5 @@
 import unittest
-from crawler.music_crawler import MusicBaseDataCrawler, MusicFileCrawler
+from src.crawler.music_crawler import MusicBaseDataCrawler, MusicFileCrawler
 
 
 class TestMusicCrawler(unittest.TestCase):

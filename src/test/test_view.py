@@ -1,7 +1,7 @@
 import unittest
 
-from model.music_model import MusicBaseDataModel, MusicFileModel
-from view.music_terminal_view import MusicTerminalView
+from src.model.music_model import MusicBaseDataModel, MusicFileModel
+from src.view.music_terminal_view import MusicTerminalView
 
 
 class TestMusicView(unittest.TestCase):

@@ -15,8 +15,8 @@ from io import BytesIO
 import pygame
 from pydub import AudioSegment
 
-from exception.music_exception import InputParameterError
-from view.lyric_split import LyricSplit
+from src.exception.music_exception import InputParameterError
+from src.view.lyric_split import LyricSplit
 
 
 def color_input(data='', text_color=1):

@@ -4,9 +4,9 @@
 
 """
 
-from model.music_model import MusicBaseDataModel, MusicFileModel
-from view.music_terminal_view import MusicTerminalView
-from exception.music_exception import InputParameterError, CrawlerFailedError
+from src.model.music_model import MusicBaseDataModel, MusicFileModel
+from src.view.music_terminal_view import MusicTerminalView
+from src.exception.music_exception import InputParameterError, CrawlerFailedError
 
 
 class MusicTerminalController(object):

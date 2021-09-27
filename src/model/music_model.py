@@ -5,8 +5,8 @@
 
 """
 
-from crawler.music_crawler import MusicBaseDataCrawler, MusicFileCrawler
-from exception.music_exception import CrawlerFailedError, InputParameterError
+from src.crawler.music_crawler import MusicBaseDataCrawler, MusicFileCrawler
+from src.exception.music_exception import CrawlerFailedError, InputParameterError
 
 
 class MusicBaseDataModel(object):

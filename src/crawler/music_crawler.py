@@ -8,7 +8,7 @@
 import json.decoder
 
 import httpx
-from exception.music_exception import CrawlerFailedError, InputParameterError
+from src.exception.music_exception import CrawlerFailedError, InputParameterError
 
 
 class MusicBaseDataCrawler(object):

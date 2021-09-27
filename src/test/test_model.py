@@ -1,5 +1,5 @@
 import unittest
-from model.music_model import MusicBaseDataModel, MusicFileModel
+from src.model.music_model import MusicBaseDataModel, MusicFileModel
 
 
 class TestMusicModel(unittest.TestCase):
