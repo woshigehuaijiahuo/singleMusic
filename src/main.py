@@ -2,8 +2,8 @@ import sys
 
 from src.controller.music_controller import MusicTerminalController
 
-if __name__ == '__main__':
 
+def main():
     tmp_argv = sys.argv
     tmp_argv.pop(0)
 
@@ -29,3 +29,7 @@ if __name__ == '__main__':
     # music_file_model = MusicFileModel(terminal_view.get_user_select().get('url'))
     # terminal_view.music_play(music_file=music_file_model.get_music_file())
     # terminal_view.show_lyric(terminal_view.get_user_select().get('lrc'))
+
+
+if __name__ == '__main__':
+    main()
