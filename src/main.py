@@ -1,6 +1,6 @@
 import sys
 
-from controller.music_controller import MusicTerminalController
+from src.controller.music_controller import MusicTerminalController
 
 if __name__ == '__main__':
 
