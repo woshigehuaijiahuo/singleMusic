@@ -7,7 +7,6 @@
 
 """
 
-# from io import BytesIO
 
 import time
 from io import BytesIO
@@ -25,6 +24,9 @@ def color_input(data='', text_color=1):
 
 
 class MusicTerminalView(object):
+    """
+    view 之一, 命令行版
+    """
 
     def __init__(self):
         self.song_input = None
