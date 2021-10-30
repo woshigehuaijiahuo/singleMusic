@@ -47,21 +47,21 @@ class MusicMainController(object):
                     MusicTerminalController(song_input=self.song_input, song_type=self.song_type)
                 # 捕获爬虫失败异常
                 except CrawlerFailedError:
-                    if not is_exit('\t\t\t\t**--------------------->似乎出了点问题，退出或重新点歌 y|n: '):
+                    if not is_exit('\t\t\t\t**--------------------->似乎出了点问题，重新点歌? y|n: '):
                         self.song_input = None
                         MusicTerminalController(song_input=self.song_input, song_type=self.song_type)
                     else:
                         exit()
                 # 捕获输入参数异常
                 except InputParameterError:
-                    if not is_exit('\t\t\t\t**--------------------->似乎出了点问题，退出或重新点歌 y|n: '):
+                    if not is_exit('\t\t\t\t**--------------------->似乎出了点问题，重新点歌? y|n: '):
                         self.song_input = None
                         MusicTerminalController(song_input=self.song_input, song_type=self.song_type)
                     else:
                         exit()
                 # 捕获键中断异常
                 except KeyboardInterrupt:
-                    if not is_exit('\t\t\t\t**--------------------->您关闭了一首歌，退出或重新点歌 y|n: '):
+                    if not is_exit('\t\t\t\t**--------------------->您关闭了一首歌，重新点歌? y|n: '):
                         self.song_input = None
                         MusicTerminalController(song_input=self.song_input, song_type=self.song_type)
                     else:
