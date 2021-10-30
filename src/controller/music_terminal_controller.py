@@ -1,6 +1,6 @@
 """负责将 model 和 view 结合起来
 
-此控制器将 model 和 命令行版 view 结合起来
+此控制器将结合 model 和 MusicTerminalView
 
 """
 
@@ -10,6 +10,7 @@ from src.exception.music_exception import InputParameterError, CrawlerFailedErro
 
 
 class MusicTerminalController(object):
+    """终端控制器实现"""
     def __init__(self, song_input=None, song_type=None):
         self.music_terminal_view = MusicTerminalView()
 

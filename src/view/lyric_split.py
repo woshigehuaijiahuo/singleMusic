@@ -38,6 +38,7 @@ class LyricSplit(object):
         return True
 
     def __init__(self, lyric=None):
+        """初始化类数据，接收参数，合法性判断"""
         if not self.__is_qualified(lyric):
             raise InputParameterError()
 

@@ -7,6 +7,7 @@
 
 from src.crawler.music_crawler import MusicBaseDataCrawler, MusicFileCrawler
 from src.exception.music_exception import CrawlerFailedError, InputParameterError
+from docs.conf import MUSIC_URL_QUICK, MUSIC_URL_BACKUP
 
 
 class MusicBaseDataModel(object):
@@ -34,8 +35,7 @@ class MusicBaseDataModel(object):
 
     def __init__(self,
                  song_input=None,
-                 # song_url='http://music.9q4.cn',
-                 song_url='https://bukaivip.com/music/',
+                 song_url=MUSIC_URL_QUICK,
                  song_filter='name',
                  song_type='netease',
                  song_page='1'):
@@ -119,6 +119,3 @@ class MusicFileModel(object):
 
     def get_music_file(self) -> bytes:
         return self.music_file_crawler.get_music_file()
-
-
-

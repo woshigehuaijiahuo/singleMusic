@@ -9,6 +9,7 @@ import json.decoder
 
 import httpx
 from src.exception.music_exception import CrawlerFailedError, InputParameterError
+from docs.conf import MUSIC_URL_QUICK, MUSIC_URL_BACKUP
 
 
 class MusicBaseDataCrawler(object):
@@ -40,8 +41,7 @@ class MusicBaseDataCrawler(object):
     def __init__(
             self,
             song_input=None,
-            song_url='http://music.9q4.cn',
-            # song_url='https://bukaivip.com/music/',
+            song_url=MUSIC_URL_QUICK,
             song_filter='name',
             song_type='netease',
             song_page='1'
@@ -80,15 +80,23 @@ class MusicBaseDataCrawler(object):
     def crawler(self) -> int:
         """开始爬虫
 
-        :return:
+        :return: 返回状态码
         """
+
+        # 两个请求 URL，一个快速，一个稳定，快速作为主打，稳定作为二次请求
         try:
             response = httpx.post(url=self.__url, data=self.__form_data, headers=self.__headers, timeout=100)
         except httpx.ConnectError:
-            raise CrawlerFailedError(self.__class__.__name__)
+            try:
+                response = httpx.post(url=MUSIC_URL_BACKUP, data=self.__form_data, headers=self.__headers, timeout=100)
+            except httpx.ConnectError:
+                raise CrawlerFailedError(self.__class__.__name__)
+            except httpx.HTTPError:
+                raise CrawlerFailedError(self.__class__.__name__)
         except httpx.HTTPError:
             raise CrawlerFailedError(self.__class__.__name__)
 
+        # 对 JSON 数据进行解析，排错处理
         try:
             json_data = response.json()
         except json.decoder.JSONDecodeError:
@@ -97,9 +105,11 @@ class MusicBaseDataCrawler(object):
             except json.decoder.JSONDecodeError as json_error:
                 raise json_error
 
+        # 将数据填充到字典
         for single in json_data['data']:
             self.__data[str(dict(single)['songid'])] = dict(single)
 
+        # 返回请求状态码
         return response.status_code
 
     def get_data(self) -> dict:

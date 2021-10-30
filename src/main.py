@@ -1,6 +1,6 @@
 import sys
 
-from src.controller.music_controller import MusicTerminalController
+from src.controller.music_terminal_controller import MusicTerminalController
 
 
 def main():
