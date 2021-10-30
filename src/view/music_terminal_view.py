@@ -15,11 +15,7 @@ from pydub import AudioSegment
 
 from src.exception.music_exception import InputParameterError
 from src.view.lyric_split import LyricSplit
-
-
-def color_input(data='', text_color=1):
-    """打印出带颜色的文本"""
-    print(f'\033[3{text_color}m{data}\033[0m')
+from utils.tools import color_output
 
 
 class MusicTerminalView(object):
@@ -34,7 +30,7 @@ class MusicTerminalView(object):
         self.music = None
 
     def user_input(self) -> str:
-        song_input = input('点首歌吧：')
+        song_input = input(color_output('\t\t\t\t**--------------------->点首歌吧: ', is_return=True))
         self.song_input = song_input
         return song_input
 
@@ -54,15 +50,15 @@ class MusicTerminalView(object):
         color = 1
         count = 0
         layout_head = '\t\t\t\t**--------------------------------------------------------------------------------------------------------**'
-        color_input('\t\t\t\t\t\t\t\t\t\t音乐列表')
-        color_input(layout_head, text_color=2)
-        color_input(layout_head, text_color=3)
-        color_input('\t\t\t\t**--------------------->\t歌手\t\t\t歌名')
+        color_output('\t\t\t\t\t\t\t\t\t\t音乐列表')
+        color_output(layout_head, text_color=2)
+        color_output(layout_head, text_color=3)
+        color_output('\t\t\t\t**--------------------->\t歌手\t\t\t歌名')
         for single in music_id_list:
             if color > 6:
                 color = 1
             tmp_data = self.music_data.get(single)
-            color_input(
+            color_output(
                 f'\t\t\t\t{count + 1}.--------------------->\t{tmp_data.get("author")}\t\t\t{tmp_data.get("title")}',
                 text_color=color)
             color += 1
@@ -73,11 +69,11 @@ class MusicTerminalView(object):
         while flag:
             select = input('\t\t\t\t请选择你喜欢的作者：')
             if select == "":
-                color_input('\t\t\t\t输入有误，请重新输入：')
+                color_output('\t\t\t\t输入有误，请重新输入：')
             try:
                 select = int(select)
             except ValueError:
-                color_input('\t\t\t\t输入有误，请重新输入：')
+                color_output('\t\t\t\t输入有误，请重新输入：')
             self.song_select = self.music_data.get(music_id_list[int(select) - 1])
             flag = False
 
@@ -93,23 +89,23 @@ class MusicTerminalView(object):
         layout_head = '\t\t\t\t**--------------------------------------------------------------------------------------------------------**'
         print('\n\n')
 
-        color_input(f'\t\t\t\t\t\t\t\t\t\tmusic: {self.song_select.get("title")}', text_color=2)
-        color_input(layout_head, text_color=1)
-        color_input(layout_head, text_color=2)
+        color_output(f'\t\t\t\t\t\t\t\t\t\tmusic: {self.song_select.get("title")}', text_color=2)
+        color_output(layout_head, text_color=1)
+        color_output(layout_head, text_color=2)
         for i in range(len(time_list)):
             if i > 0:
                 time.sleep(time_list[i] - time_list[i - 1])
-                color_input(f'\t\t\t\t---------------->\t\t\t\t{lrc.get_lyric_dict().get(time_list[i])}',
-                            text_color=color)
-                color_input('\t\t\t\t---------------->')
+                color_output(f'\t\t\t\t---------------->\t\t\t\t{lrc.get_lyric_dict().get(time_list[i])}',
+                             text_color=color)
+                color_output('\t\t\t\t---------------->')
                 color += 1
                 if color > 6:
                     color = 1
             else:
                 time.sleep(time_list[i])
-                color_input(f'\t\t\t\t---------------->\t\t\t\t{lrc.get_lyric_dict().get(time_list[i])}',
-                            text_color=color)
-                color_input('\t\t\t\t---------------->')
+                color_output(f'\t\t\t\t---------------->\t\t\t\t{lrc.get_lyric_dict().get(time_list[i])}',
+                             text_color=color)
+                color_output('\t\t\t\t---------------->')
 
     def music_play(self, music_file=None):
         if music_file is None:
@@ -138,4 +134,5 @@ class MusicTerminalView(object):
 
     # 停止当前音乐播放
     def music_stop(self):
-        self.music.stop()
+        if self.music is not None:
+            self.music.stop()

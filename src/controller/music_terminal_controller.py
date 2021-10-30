@@ -46,11 +46,19 @@ class MusicTerminalController(object):
 
         # 异步播放音乐并打印歌词，捕获并处理对应异常
         try:
-            self.music_terminal_view.music_play(self.music_file_model.get_music_file())
-        except InputParameterError as input_parameter_error:
-            raise input_parameter_error
-        try:
-            self.music_terminal_view.show_lyric(self.music_terminal_view.get_user_select().get('lrc'))
-        except InputParameterError:
+            try:
+                self.music_terminal_view.music_play(self.music_file_model.get_music_file())
+            except InputParameterError as input_parameter_error:
+                raise input_parameter_error
+            try:
+                self.music_terminal_view.show_lyric(self.music_terminal_view.get_user_select().get('lrc'))
+            except InputParameterError:
+                self.music_terminal_view.music_stop()
+                self.music_terminal_view.music_play(self.music_file_model.get_music_file())
+        except KeyboardInterrupt as keyboard_interrupt:
             self.music_terminal_view.music_stop()
-            self.music_terminal_view.music_play(self.music_file_model.get_music_file())
+            raise keyboard_interrupt
+
+    def music_stop(self):
+        if self.music_terminal_view is not None:
+            self.music_terminal_view.music_stop()
