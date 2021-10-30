@@ -10,8 +10,9 @@ def main():
     song_input = None
     song_type = None
 
-    music_source = ['netease', 'kugou', 'kuwo', 'xiami', 'migu', 'qq']
+    music_source = ['netease', 'kugou', ]
 
+    # 对命令行参数进行读取，判断合法性
     for single in tmp_argv:
         if single[0] == ':':
             if single[1:] in music_source:
