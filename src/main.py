@@ -4,6 +4,7 @@ import sys
 from src.controller.music_terminal_controller import MusicTerminalController
 from src.exception.music_exception import InputParameterError, CrawlerFailedError
 from utils.tools import color_output
+from docs.conf import MusicSource
 
 
 def is_exit(output=''):
@@ -26,12 +27,10 @@ def main():
     song_input = None
     song_type = None
 
-    music_source = ['netease', 'kugou', ]
-
     # 对命令行参数进行读取，判断合法性
     for single in tmp_argv:
         if single[0] == ':':
-            if single[1:] in music_source:
+            if single[1:] in MusicSource.MUSIC_SOURCE_LIST:
                 song_type = single[1:]
         else:
             song_input = single
@@ -62,5 +61,3 @@ def main():
                 MusicTerminalController(song_input=song_input, song_type=song_type)
             else:
                 exit()
-
-
