@@ -5,3 +5,6 @@
 MUSIC_URL_QUICK = 'http://music.9q4.cn'
 MUSIC_URL_BACKUP = 'https://bukaivip.com/music/'
 
+# 爬虫请求延时设置
+TIME_OUT = 20
+

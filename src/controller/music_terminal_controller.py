@@ -24,20 +24,33 @@ class MusicTerminalController(object):
         else:
             self.song_type = song_type
 
-        # 捕获异常，继续上层抛出
+        # 初始化音乐基础数据模型，并捕获异常，继续上层抛出
         try:
             self.music_base_data_model = MusicBaseDataModel(song_input=self.song_input, song_type=self.song_type)
         except CrawlerFailedError as crawler_failed_error:
             raise crawler_failed_error
+        except InputParameterError as input_parameter_error:
+            raise input_parameter_error
 
+        # 得到音乐基础数据, 使用音乐基础数据展示音乐选择视图
         music_basic_data = self.music_base_data_model.get_data()
-
         self.music_terminal_view.show_select(music_basic_data)
 
-        self.music_file_model = MusicFileModel(self.music_terminal_view.get_user_select().get("url"))
+        # 初始化音乐文件模型，输入音乐下载链接，模型调用爬虫将MP3文件保存在缓存中, 捕获并处理响应异常
+        try:
+            self.music_file_model = MusicFileModel(self.music_terminal_view.get_user_select().get("url"))
+        except CrawlerFailedError as crawler_failed_error:
+            raise crawler_failed_error
+        except InputParameterError as input_parameter_error:
+            raise input_parameter_error
 
-        self.music_terminal_view.music_play(self.music_file_model.get_music_file())
+        # 异步播放音乐并打印歌词，捕获并处理对应异常
+        try:
+            self.music_terminal_view.music_play(self.music_file_model.get_music_file())
+        except InputParameterError as input_parameter_error:
+            raise input_parameter_error
         try:
             self.music_terminal_view.show_lyric(self.music_terminal_view.get_user_select().get('lrc'))
         except InputParameterError:
+            self.music_terminal_view.music_stop()
             self.music_terminal_view.music_play(self.music_file_model.get_music_file())

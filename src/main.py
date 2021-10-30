@@ -1,6 +1,7 @@
 import sys
 
 from src.controller.music_terminal_controller import MusicTerminalController
+from src.exception.music_exception import InputParameterError, CrawlerFailedError
 
 
 def main():
@@ -20,16 +21,32 @@ def main():
         else:
             song_input = single
 
-    m = MusicTerminalController(song_input=song_input, song_type=song_type)
-
-    # terminal_view = MusicTerminalView()
-    # song_input = terminal_view.user_input()
-    # base_data_model = MusicBaseDataModel(song_input=song_input)
-    # base_data = base_data_model.get_data()
-    # terminal_view.show_select(base_data)
-    # music_file_model = MusicFileModel(terminal_view.get_user_select().get('url'))
-    # terminal_view.music_play(music_file=music_file_model.get_music_file())
-    # terminal_view.show_lyric(terminal_view.get_user_select().get('lrc'))
+    # 捕获各种可能出现的异常，并做相应处理
+    try:
+        MusicTerminalController(song_input=song_input, song_type=song_type)
+    except CrawlerFailedError:
+        try:
+            MusicTerminalController(song_input=song_input, song_type=song_type)
+        except CrawlerFailedError:
+            print('似乎出了点问题，请重新点歌吧')
+            song_input = None
+            MusicTerminalController(song_input=song_input, song_type=song_type)
+        except InputParameterError:
+            print('似乎出了点问题，请重新点歌吧')
+            song_input = None
+            MusicTerminalController(song_input=song_input, song_type=song_type)
+        except KeyboardInterrupt:
+            print('您关闭了上一首歌，请重新点首歌吧')
+            song_input = None
+            MusicTerminalController(song_input=song_input, song_type=song_type)
+    except InputParameterError:
+        print('似乎出了点问题，请重新点歌吧')
+        song_input = None
+        MusicTerminalController(song_input=song_input, song_type=song_type)
+    except KeyboardInterrupt:
+        print('您关闭了上一首歌，请重新点首歌吧')
+        song_input = None
+        MusicTerminalController(song_input=song_input, song_type=song_type)
 
 
 if __name__ == '__main__':

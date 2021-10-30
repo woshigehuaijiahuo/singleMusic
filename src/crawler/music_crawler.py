@@ -9,7 +9,7 @@ import json.decoder
 
 import httpx
 from src.exception.music_exception import CrawlerFailedError, InputParameterError
-from docs.conf import MUSIC_URL_QUICK, MUSIC_URL_BACKUP
+from docs.conf import MUSIC_URL_QUICK, MUSIC_URL_BACKUP, TIME_OUT
 
 
 class MusicBaseDataCrawler(object):
@@ -85,10 +85,10 @@ class MusicBaseDataCrawler(object):
 
         # 两个请求 URL，一个快速，一个稳定，快速作为主打，稳定作为二次请求
         try:
-            response = httpx.post(url=self.__url, data=self.__form_data, headers=self.__headers, timeout=100)
+            response = httpx.post(url=self.__url, data=self.__form_data, headers=self.__headers, timeout=TIME_OUT)
         except httpx.ConnectError:
             try:
-                response = httpx.post(url=MUSIC_URL_BACKUP, data=self.__form_data, headers=self.__headers, timeout=100)
+                response = httpx.post(url=MUSIC_URL_BACKUP, data=self.__form_data, headers=self.__headers, timeout=TIME_OUT)
             except httpx.ConnectError:
                 raise CrawlerFailedError(self.__class__.__name__)
             except httpx.HTTPError:
@@ -164,13 +164,16 @@ class MusicFileCrawler(object):
         self.__music_file = None
 
     def crawler(self) -> int:
+
+        # 异常检测
         try:
-            response = httpx.get(url=self.__down_url, timeout=10)
+            response = httpx.get(url=self.__down_url, timeout=TIME_OUT)
         except httpx.ConnectError:
             raise CrawlerFailedError(self.__class__.__name__)
         except httpx.HTTPError:
             raise CrawlerFailedError(self.__class__.__name__)
 
+        # 如果没有异常，赋值与返回状态码
         else:
             self.__music_file = response.content
             return response.status_code

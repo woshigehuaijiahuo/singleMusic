@@ -7,7 +7,6 @@
 
 """
 
-
 import time
 from io import BytesIO
 
@@ -32,6 +31,7 @@ class MusicTerminalView(object):
         self.song_input = None
         self.music_data = None
         self.song_select = None
+        self.music = None
 
     def user_input(self) -> str:
         song_input = input('点首歌吧：')
@@ -67,7 +67,8 @@ class MusicTerminalView(object):
                 text_color=color)
             color += 1
             count += 1
-        # color_input('\t\t\t\t请输入选择序号：')
+
+        #
         flag = True
         while flag:
             select = input('\t\t\t\t请选择你喜欢的作者：')
@@ -123,13 +124,18 @@ class MusicTerminalView(object):
 
         try:
             # 在 windows 平台上似乎是好的
-            music = pygame.mixer.Sound(music_mp3)
+            self.music = pygame.mixer.Sound(music_mp3)
         except pygame.error:
             # 在 linux 平台上必须转码才能播放
             music_ogg = AudioSegment.from_mp3(music_mp3).export(format='ogg')
-            music = pygame.mixer.Sound(music_ogg)
+            self.music = pygame.mixer.Sound(music_ogg)
 
-        music.play()
+        self.music.play()
 
+    # 返回的是一个字典，字典数据中携带者基础数据
     def get_user_select(self) -> dict:
         return self.song_select
+
+    # 停止当前音乐播放
+    def music_stop(self):
+        self.music.stop()
