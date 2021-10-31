@@ -8,7 +8,7 @@
 """
 
 from utils.tools import color_output
-from docs.conf import Pattern
+from docs.conf import Pattern, LAYOUT_HEAD
 
 
 class MusicMainView(object):
@@ -21,6 +21,8 @@ class MusicMainView(object):
         self.__pattern_select = Pattern.PLAY
 
     def show_pattern(self):
+        color_output(LAYOUT_HEAD, text_color=1)
+        color_output(LAYOUT_HEAD, text_color=4)
         color_output('\t\t\t\t**--------------------->1. 点歌模式', text_color=1)
         color_output('\t\t\t\t**--------------------->2. 下载模式', text_color=2)
         color_output('\t\t\t\t**--------------------->3. 音乐源选择', text_color=3)

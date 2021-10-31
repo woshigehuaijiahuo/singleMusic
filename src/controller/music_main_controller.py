@@ -4,7 +4,7 @@
 """
 import re
 
-from src.controller.music_terminal_controller import MusicTerminalController
+from src.controller.music_play_controller import MusicPlayController
 from src.exception.music_exception import CrawlerFailedError, InputParameterError
 from src.view.music_main_view import MusicMainView
 from docs.conf import Pattern
@@ -44,26 +44,26 @@ class MusicMainController(object):
             while True:
 
                 try:
-                    MusicTerminalController(song_input=self.song_input, song_type=self.song_type)
+                    MusicPlayController(song_input=self.song_input, song_type=self.song_type)
                 # 捕获爬虫失败异常
                 except CrawlerFailedError:
                     if not is_exit('\t\t\t\t**--------------------->似乎出了点问题，重新点歌? y|n: '):
                         self.song_input = None
-                        MusicTerminalController(song_input=self.song_input, song_type=self.song_type)
+                        MusicPlayController(song_input=self.song_input, song_type=self.song_type)
                     else:
                         exit()
                 # 捕获输入参数异常
                 except InputParameterError:
                     if not is_exit('\t\t\t\t**--------------------->似乎出了点问题，重新点歌? y|n: '):
                         self.song_input = None
-                        MusicTerminalController(song_input=self.song_input, song_type=self.song_type)
+                        MusicPlayController(song_input=self.song_input, song_type=self.song_type)
                     else:
                         exit()
                 # 捕获键中断异常
                 except KeyboardInterrupt:
                     if not is_exit('\t\t\t\t**--------------------->您关闭了一首歌，重新点歌? y|n: '):
                         self.song_input = None
-                        MusicTerminalController(song_input=self.song_input, song_type=self.song_type)
+                        MusicPlayController(song_input=self.song_input, song_type=self.song_type)
                     else:
                         exit()
 

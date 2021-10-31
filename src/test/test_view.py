@@ -1,12 +1,12 @@
 import unittest
 
 from src.model.music_model import MusicBaseDataModel, MusicFileModel
-from src.view.music_terminal_view import MusicTerminalView
+from src.view.music_play_view import MusicPlayView
 
 
 class TestMusicView(unittest.TestCase):
     def test_music_terminal_view(self):
-        terminal_view = MusicTerminalView()
+        terminal_view = MusicPlayView()
         song_input = terminal_view.user_input()
         base_data_model = MusicBaseDataModel(song_input=song_input)
         base_data = base_data_model.get_data()

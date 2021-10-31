@@ -18,7 +18,7 @@ from src.view.lyric_split import LyricSplit
 from utils.tools import color_output
 
 
-class MusicTerminalView(object):
+class MusicPlayView(object):
     """
     view 之一, 命令行版
     """

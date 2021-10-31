@@ -5,14 +5,14 @@
 """
 
 from src.model.music_model import MusicBaseDataModel, MusicFileModel
-from src.view.music_terminal_view import MusicTerminalView
+from src.view.music_play_view import MusicPlayView
 from src.exception.music_exception import InputParameterError, CrawlerFailedError
 
 
-class MusicTerminalController(object):
+class MusicPlayController(object):
     """终端控制器实现"""
     def __init__(self, song_input=None, song_type=None):
-        self.music_terminal_view = MusicTerminalView()
+        self.music_terminal_view = MusicPlayView()
 
         if song_input is None:
             self.song_input = self.music_terminal_view.user_input()
